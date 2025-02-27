@@ -14,23 +14,26 @@ def get_height(node):
 def get_balance(node):
     return get_height(node.left) - get_height(node.right) if node else 0
 
-def right_rotate(y):
-    x = y.left
-    T2 = x.right
-    x.right = y
-    y.left = T2
-    y.height = 1 + max(get_height(y.left), get_height(y.right))
-    x.height = 1 + max(get_height(x.left), get_height(x.right))
-    return x
+def right_rotate(node):
+    newparentnode = node.left
+    T2 = newparentnode.right
 
-def left_rotate(x):
-    y = x.right
-    T2 = y.left
-    y.left = x
-    x.right = T2
-    x.height = 1 + max(get_height(x.left), get_height(x.right))
-    y.height = 1 + max(get_height(y.left), get_height(y.right))
-    return y
+    newparentnode.right = node
+    node.left = T2
+
+    node.height = 1 + max(get_height(node.left), get_height(node.right))
+    newparentnode.height = 1 + max(get_height(newparentnode.left), get_height(newparentnode.right))
+
+    return newparentnode
+
+def left_rotate(node):
+    newparentnode = node.right
+    T2 = newparentnode.left
+    newparentnode.left = node
+    node.right = T2
+    node.height = 1 + max(get_height(node.left), get_height(node.right))
+    newparentnode.height = 1 + max(get_height(newparentnode.left), get_height(newparentnode.right))
+    return newparentnode
 
 def avl_insert(node, key):
     if not node:
